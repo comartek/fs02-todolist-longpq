@@ -47,6 +47,8 @@ export let login = (email, password, navigate) => {
     .catch((err) => alert(err.response.data));
 };
 
+//API User
+
 export let getLoggedInUser = (setUser) => {
   const options = {
     method: "GET",
@@ -58,6 +60,66 @@ export let getLoggedInUser = (setUser) => {
     .request(options)
     .then((res) => {
       setUser(res.data);
+    })
+    .catch((err) => alert(err.response.data));
+};
+
+export let updateInfo = (name, email, age, setUser) => {
+  const options = {
+    method: "PUT",
+    url: `${domain}/user/me`,
+    headers: {
+      "Content-Type": "application/json",
+      Authorization: `${localStorage.getItem("token")}`,
+    },
+    data: {
+      name: name,
+      email: email,
+      age: age,
+    },
+  };
+
+  axios
+    .request(options)
+    .then((res) => {
+      console.log(res.data);
+      setUser(res.data.data);
+    })
+    .catch((err) => alert(err.response.data));
+};
+
+export let getUserImage = (id) => {
+  const options = {
+    method: "GET",
+    url: `${domain}/user/${id}/avatar`,
+  };
+
+  axios
+    .request(options)
+    .then((res) => {
+      console.log(res.data);
+    })
+    .catch((err) => console.log(err.response.data.error));
+};
+
+export let uploadAvatar = (imageFile) => {
+  let bodyFormData = new FormData();
+  bodyFormData.append("avatar", imageFile);
+  const options = {
+    method: "POST",
+    url: `${domain}/user/me/avatar`,
+    headers: {
+      Authorization: `${localStorage.getItem("token")}`,
+      "Content-Type": "multipart/form-data",
+      "Access-Control-Allow-Origin": "*",
+    },
+    data: bodyFormData,
+  };
+
+  axios
+    .request(options)
+    .then((res) => {
+      console.log(res.data);
     })
     .catch((err) => alert(err.response.data));
 };
@@ -93,7 +155,6 @@ export let getAllTask = (setTaskList) => {
   axios
     .request(options)
     .then((res) => {
-      //   console.log(res.data.data);
       setTaskList(res.data.data);
     })
     .catch((err) => alert(err.response.data));
@@ -174,6 +235,33 @@ export let getTaskByPagination = (limit, skip, setTask) => {
     .request(options)
     .then((res) => {
       setTask(res.data.data);
+    })
+    .catch((err) => console.log(err.response.data));
+};
+
+export let updateTask = (id, completed, curPage, setTask) => {
+  let data =
+    completed === true || completed === false
+      ? { completed: completed }
+      : { description: completed };
+
+  console.log({ id, completed });
+  const options = {
+    method: "PUT",
+    url: `${domain}/task/${id}`,
+    headers: {
+      "Content-Type": "application/json",
+      Authorization: `Bearer ${localStorage.getItem("token")}`,
+    },
+    data: data,
+  };
+
+  axios
+    .request(options)
+    .then((res) => {
+      // setTask(res.data.data);
+      getTaskByPagination(10, curPage * 10 - 10, setTask);
+      console.log(res.data);
     })
     .catch((err) => console.log(err.response.data));
 };

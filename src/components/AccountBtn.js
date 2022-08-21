@@ -1,15 +1,31 @@
+import { faRefresh, faUpload } from "@fortawesome/free-solid-svg-icons";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { useEffect, useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import Popup from "reactjs-popup";
-import { getLoggedInUser, logout } from "../Data";
+import { getLoggedInUser, getUserImage, logout } from "../Data";
+import { setUser } from "../store/actions";
+import { userSelector } from "../store/selectors";
+import BtnUI from "./BtnUI";
+import UpdateInfo from "./UpdateInfo";
 
 let AccountBtn = (props) => {
-  let [user, setUser] = useState({});
   let [isOpen, setIsOpen] = useState(false);
+  let [isOpenLogout, setIsOpenLogout] = useState(false);
+
   let navigate = useNavigate();
 
+  let user = useSelector(userSelector);
+
+  let dispatchRedux = useDispatch();
+  let dispatchUser = (data) => {
+    dispatchRedux(setUser(data));
+  };
+
   useEffect(() => {
-    getLoggedInUser(setUser);
+    getLoggedInUser(dispatchUser);
+    getUserImage(user._id);
   }, []);
 
   let imgAccount =
@@ -27,6 +43,7 @@ let AccountBtn = (props) => {
           ></button>
         }
         position={"bottom center"}
+        closeOnDocumentClick={false}
         onOpen={() => setIsOpen(true)}
         open={isOpen}
       >
@@ -47,14 +64,42 @@ let AccountBtn = (props) => {
               <div className="font-bold text-red-400">{user.age}</div>
             </div>
           </div>
-          <button
-            onClick={() => logout(navigate)}
-            className="bg-red-400 w-full text-white p-5 mt-5"
+          <UpdateInfo user={user} setUser={dispatchUser} />
+          <Popup
+            modal
+            trigger={
+              // <BtnUI text="Logout" action={() => setIsOpenLogout(true)} />
+              <button className="bg-red-400 text-white w-full p-3 rounded-md mt-3">
+                Logout
+              </button>
+            }
+            position={"bottom center"}
+            // closeOnDocumentClick={false}
+            onOpen={() => setIsOpenLogout(true)}
+            open={isOpenLogout}
+            contentStyle={{
+              borderRadius: 5,
+            }}
           >
-            Logout
-          </button>
+            <div className="rounded-md flex flex-col p-5">
+              <div>Are you sure want to logout {user.name} account?</div>
+              <div className="flex items-center self-end">
+                <button
+                  className="text-red-400 p-3 mt-3"
+                  onClick={() => setIsOpenLogout(false)}
+                >
+                  Cancel
+                </button>
+                <BtnUI text="Apply" action={() => logout(navigate("/"))} />
+              </div>
+            </div>
+          </Popup>
         </div>
       </Popup>
+      <div>
+        Welcome,
+        <div className="font-bold text-red-400 text-xl">{user.name}</div>
+      </div>
     </div>
   );
 };

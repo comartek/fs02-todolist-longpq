@@ -1,5 +1,6 @@
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
+import BtnUI from "./components/BtnUI";
 import InputItem from "./components/InputItem";
 import { login } from "./Data";
 import { validate, validatePassword } from "./validate";
@@ -26,12 +27,7 @@ let Login = (props) => {
           value={password}
           setValue={setPassword}
         />
-        <button
-          className="bg-red-400 w-full p-3 mt-3"
-          onClick={() => login(email, password, navigate)}
-        >
-          <div className="text-white">Login</div>
-        </button>
+        <BtnUI text="Login" action={() => login(email, password, navigate)} />
         <div>
           <div className="text-gray-600 mt-3">
             Have no account?{" "}

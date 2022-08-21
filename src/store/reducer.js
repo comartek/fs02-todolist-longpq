@@ -5,6 +5,7 @@ import {
   UPDATE_COUNT,
   CURRENT_PAGE,
   SET_ALLTASK,
+  SET_USER,
 } from "./constains";
 
 const initialState = {
@@ -12,6 +13,7 @@ const initialState = {
   updateCount: 0,
   currentPage: 1,
   allTask: [],
+  user: {},
 };
 
 const rootReducer = (state = initialState, action) => {
@@ -48,6 +50,11 @@ const rootReducer = (state = initialState, action) => {
       return {
         ...state,
         allTask: action.payload,
+      };
+    case SET_USER:
+      return {
+        ...state,
+        user: action.payload,
       };
     default:
       return state;

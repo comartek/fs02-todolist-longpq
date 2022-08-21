@@ -28,16 +28,19 @@ let PaginationUI = (props) => {
   }, [selector, curPage]);
 
   return (
-    <Pagination
-      count={count}
-      defaultPage={1}
-      onChange={(e, num) => {
-        // setCurPage(num);
-        dispatchCurPage(num);
-        getTaskByPagination(10, num * 10 - 10, dispatchSetTodos);
-      }}
-      page={curPage}
-    />
+    <div className="flex justify-center">
+      {/* <div className="flex-1"></div> */}
+      <Pagination
+        count={count}
+        defaultPage={1}
+        onChange={(e, num) => {
+          // setCurPage(num);
+          dispatchCurPage(num);
+          getTaskByPagination(10, num * 10 - 10, dispatchSetTodos);
+        }}
+        page={curPage}
+      />
+    </div>
   );
 };
 

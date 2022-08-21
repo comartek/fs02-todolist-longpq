@@ -1,20 +1,36 @@
-import { faCheckCircle, faCircleStop } from "@fortawesome/free-solid-svg-icons";
+import {
+  faCheckCircle,
+  faCircleStop,
+  faEye,
+  faEyeSlash,
+} from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { useState } from "react";
 
 let InputItem = (props) => {
   let { placeholder, value, setValue, type, validate } = props;
-
-  console.log(props);
+  let [isShowPassword, setIsShowPassword] = useState(false);
 
   return (
-    <div className="mt-3">
+    <div className="mt-3 relative">
       <input
-        type={type === "password" ? "password" : ""}
+        type={
+          type === "password" && isShowPassword === false ? "password" : "text"
+        }
         placeholder={placeholder}
-        className="p-3 w-96"
+        className="p-3 w-96 bg-gray-100 rounded-md"
         value={value}
         onChange={(e) => setValue(e.target.value)}
       />
+
+      {type === "password" && value.length > 0 && (
+        <button
+          className="absolute top-2.5 right-2 z-20"
+          onClick={() => setIsShowPassword(!isShowPassword)}
+        >
+          <FontAwesomeIcon icon={isShowPassword ? faEye : faEyeSlash} />
+        </button>
+      )}
 
       {validate !== undefined ? (
         value === "" ? (

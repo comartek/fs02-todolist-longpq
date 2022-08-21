@@ -16,23 +16,16 @@ let Table = (props) => {
     dispatchRedux(setTodos(data));
   };
 
-  let [todosList, setTodosList] = useState([]);
+  // let [todosList, setTodosList] = useState([]);
 
   useEffect(() => {
     getTaskByPagination(10, curPage * 10 - 10, dispatchSetTodos);
-  }, [curPage]);
-
-  useEffect(() => {
-    setTodosList(selector);
-    console.log(curPage);
-  }, [selector]);
-
-  // console.log(selector);
+  }, []);
 
   return (
-    <div>
-      {todosList.length !== 0 ? (
-        todosList.map((item) => <TableItem item={item} />)
+    <div className="h-3/4">
+      {selector.length !== 0 ? (
+        selector.map((item) => <TableItem item={item} />)
       ) : (
         <div className="w-full justify-center flex my-5">Empty</div>
       )}

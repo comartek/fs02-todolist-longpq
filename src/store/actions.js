@@ -5,6 +5,7 @@ import {
   UPDATE_COUNT,
   CURRENT_PAGE,
   SET_ALLTASK,
+  SET_USER,
 } from "./constains";
 
 export const setTodos = (data) => ({
@@ -34,5 +35,10 @@ export const currentPage = (data) => ({
 
 export const setAllTask = (data) => ({
   type: SET_ALLTASK,
+  payload: data,
+});
+
+export const setUser = (data) => ({
+  type: SET_USER,
   payload: data,
 });

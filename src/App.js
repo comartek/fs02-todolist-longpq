@@ -11,6 +11,8 @@ import { LocalizationProvider } from "@mui/x-date-pickers/LocalizationProvider";
 import AccountBtn from "./components/AccountBtn";
 import { addTask, getAllTask, getTaskByPagination } from "./Data";
 import PaginationUI from "./components/Pagination";
+import BtnUI from "./components/BtnUI";
+import { currentPageSelector } from "./store/selectors";
 
 function App() {
   let [content, setContent] = useState("");
@@ -18,6 +20,8 @@ function App() {
   let [isOpen, setIsOpen] = useState(false);
   let [count, setCount] = useState(1);
   let [allTask, setAllTask] = useState([]);
+
+  let curPage = useSelector(currentPageSelector);
 
   let dispatchRedux = useDispatch();
 
@@ -52,7 +56,7 @@ function App() {
 
   return (
     <div className="w-screen h-screen flex bg-red-400 items-center justify-center relative">
-      <div className="bg-white rounded-md w-2/3 p-5">
+      <div className="bg-white rounded-md w-2/3 p-5" style={{ height: 850 }}>
         <AccountBtn />
         <div className="flex flex-row items-center justify-between w-full mb-5">
           <div className="text-2xl text-red-400 font-bold">Todolist</div>
@@ -68,7 +72,7 @@ function App() {
             closeOnDocumentClick={false}
             open={isOpen}
           >
-            <div className="rounded-md absolute top-0 left-0 p-5 bg-white">
+            <div className="rounded-md absolute top-0 left-0 p-5 bg-white drop-shadow-md">
               <input
                 placeholder="Content"
                 className="px-5 py-4 w-40 mb-3"
@@ -85,9 +89,9 @@ function App() {
                   />
                 </LocalizationProvider>
               </div>
-              <button
-                className="bg-red-400 w-full text-white p-5 mt-5"
-                onClick={() => {
+              <BtnUI
+                text="Add"
+                action={() => {
                   if (content !== "" && date !== "") {
                     setIsOpen(false);
                     setContent("");
@@ -96,16 +100,14 @@ function App() {
                       content,
                       dispatchSetTodos,
                       update,
-                      count,
+                      curPage,
                       dispatchCurPage
                     );
                   } else {
                     alert("content or date is invalid");
                   }
                 }}
-              >
-                ADD
-              </button>
+              />
             </div>
           </Popup>
         </div>

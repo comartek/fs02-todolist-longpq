@@ -1,5 +1,6 @@
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
+import BtnUI from "./components/BtnUI";
 import InputItem from "./components/InputItem";
 import { register } from "./Data";
 import { validate, validatePassword } from "./validate";
@@ -30,12 +31,10 @@ let Register = (props) => {
           setValue={setPassword}
         />
         <InputItem placeholder="age" value={age} setValue={setAge} />
-        <button
-          className="bg-red-400 w-full p-3 mt-3"
-          onClick={() => register(name, email, password, age, navigate)}
-        >
-          <div className="text-white">Register</div>
-        </button>
+        <BtnUI
+          text="Register"
+          action={() => register(name, email, password, age, navigate)}
+        />
         <div>
           <div className="text-gray-600 mt-3">
             Already have account?{" "}
