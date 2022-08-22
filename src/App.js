@@ -14,6 +14,11 @@ import PaginationUI from "./components/Pagination";
 import BtnUI from "./components/BtnUI";
 import { currentPageSelector } from "./store/selectors";
 
+// history.pushState(null, null, location.href);
+// window.onpopstate = function (event) {
+//   history.go(1);
+// };
+
 function App() {
   let [content, setContent] = useState("");
   let [date, setDate] = useState("");

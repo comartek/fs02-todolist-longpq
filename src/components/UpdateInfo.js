@@ -1,13 +1,16 @@
 import { faRefresh } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { useEffect, useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
 import Popup from "reactjs-popup";
-import { updateInfo, uploadAvatar } from "../Data";
+import { getUserImage, updateInfo, uploadAvatar } from "../Data";
+import { setAvatar } from "../store/actions";
+import { avatarSelector } from "../store/selectors";
 import BtnUI from "./BtnUI";
 import InputItem from "./InputItem";
 
-let UpdateInfo = (props) => {
-  let { user, setUser } = props;
+const UpdateInfo = (props) => {
+  let { user, setUser, imgAccount, dispatchAvatar } = props;
 
   let [isOpen, setIsOpen] = useState(false);
   let [name, setName] = useState("");
@@ -20,8 +23,10 @@ let UpdateInfo = (props) => {
     setAge(user.age);
   }, []);
 
-  let imgAccount =
-    "https://www.meme-arsenal.com/memes/8b6f5f94a53dbc3c8240347693830120.jpg";
+  useEffect(() => {
+    // getUserImage(user._id, dispatchAvatar);
+    console.log("11111", imgAccount);
+  }, [imgAccount]);
 
   return (
     <div className="flex">
@@ -34,29 +39,31 @@ let UpdateInfo = (props) => {
             Update information
           </button>
         }
-        // closeOnDocumentClick={false}
         onOpen={() => setIsOpen(true)}
         open={isOpen}
-        // overlayStyle={{ backgroundColor: "white" }}
         contentStyle={{ borderRadius: 5, paddingTop: 20, paddingBottom: 20 }}
       >
-        <div
-          className="flex flex-col items-center justify-center"
-          //   onClick={() => setIsOpen(true)}
-        >
+        <div className="flex flex-col items-center justify-center">
           <div className="text-xl font-bold text-red-400 uppercase my-5">
             Update information
           </div>
           <div>
             <div className="flex items-center">
-              <input
-                onChange={(e) => uploadAvatar(e.target.value)}
-                type="file"
+              <label
                 className="w-40 h-40 bg-cover mr-5 mt-3 rounded-full cursor-pointer"
-                style={{ backgroundImage: `url(${imgAccount})` }}
-              />
-              {/* <input type="file" /> */}
-              {/* </inp> */}
+                style={{
+                  backgroundImage: `url(${imgAccount})`,
+                  display: "inline-block",
+                }}
+              >
+                <input
+                  onChange={(e) => {
+                    uploadAvatar(e.target.files[0], user._id, dispatchAvatar);
+                  }}
+                  type="file"
+                  className="hidden"
+                />
+              </label>
               <div>
                 <InputItem value={name} placeholder="Name" setValue={setName} />
                 <InputItem

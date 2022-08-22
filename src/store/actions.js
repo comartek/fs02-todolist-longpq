@@ -6,6 +6,7 @@ import {
   CURRENT_PAGE,
   SET_ALLTASK,
   SET_USER,
+  SET_AVATAR,
 } from "./constains";
 
 export const setTodos = (data) => ({
@@ -40,5 +41,10 @@ export const setAllTask = (data) => ({
 
 export const setUser = (data) => ({
   type: SET_USER,
+  payload: data,
+});
+
+export const setAvatar = (data) => ({
+  type: SET_AVATAR,
   payload: data,
 });

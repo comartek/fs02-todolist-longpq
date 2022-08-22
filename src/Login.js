@@ -1,9 +1,11 @@
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
+import { ToastContainer } from "react-toastify";
 import BtnUI from "./components/BtnUI";
 import InputItem from "./components/InputItem";
 import { login } from "./Data";
 import { validate, validatePassword } from "./validate";
+import "react-toastify/dist/ReactToastify.css";
 
 let Login = (props) => {
   let navigate = useNavigate();
@@ -40,6 +42,18 @@ let Login = (props) => {
           </div>
         </div>
       </div>
+
+      <ToastContainer
+        position="bottom-center"
+        autoClose={2000}
+        hideProgressBar={false}
+        newestOnTop={false}
+        closeOnClick
+        rtl={false}
+        pauseOnFocusLoss={false}
+        draggable
+        pauseOnHover={false}
+      />
     </div>
   );
 };

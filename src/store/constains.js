@@ -5,3 +5,4 @@ export const UPDATE_COUNT = "update_count";
 export const CURRENT_PAGE = "current_page";
 export const SET_ALLTASK = "set_alltask";
 export const SET_USER = "set_user";
+export const SET_AVATAR = "set_avatar";

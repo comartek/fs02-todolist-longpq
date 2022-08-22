@@ -25,7 +25,7 @@ let Table = (props) => {
   return (
     <div className="h-3/4">
       {selector.length !== 0 ? (
-        selector.map((item) => <TableItem item={item} />)
+        selector.map((item, index) => <TableItem item={item} id={index + 1} />)
       ) : (
         <div className="w-full justify-center flex my-5">Empty</div>
       )}

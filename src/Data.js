@@ -1,4 +1,6 @@
 import axios from "axios";
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 const domain = "https://api-nodejs-todolist.herokuapp.com";
 
 //API Register
@@ -21,8 +23,10 @@ export let register = (name, email, password, age, navigate) => {
       console.log(res.data);
       localStorage.setItem("token", res.token);
     })
-    .then(() => navigate("/App"))
-    .catch((err) => alert(err.response.data));
+    .then(() =>
+      setTimeout(() => toast.success("Create account successful!!!"), 2000)
+    )
+    .catch((err) => toast.error(err.response.data));
 };
 
 //API Login
@@ -42,9 +46,10 @@ export let login = (email, password, navigate) => {
     .then((res) => {
       console.log(res.data);
       localStorage.setItem("token", res.data.token);
+      toast.success("Login successful!!!");
     })
-    .then(() => navigate("/App"))
-    .catch((err) => alert(err.response.data));
+    .then(() => setTimeout(() => navigate("/App"), 3000))
+    .catch((err) => toast.error(err.response.data));
 };
 
 //API User
@@ -61,7 +66,7 @@ export let getLoggedInUser = (setUser) => {
     .then((res) => {
       setUser(res.data);
     })
-    .catch((err) => alert(err.response.data));
+    .catch((err) => console.log(err.response.data));
 };
 
 export let updateInfo = (name, email, age, setUser) => {
@@ -85,10 +90,10 @@ export let updateInfo = (name, email, age, setUser) => {
       console.log(res.data);
       setUser(res.data.data);
     })
-    .catch((err) => alert(err.response.data));
+    .catch((err) => toast.error(err.response.data));
 };
 
-export let getUserImage = (id) => {
+export let getUserImage = (id, setImgAccount) => {
   const options = {
     method: "GET",
     url: `${domain}/user/${id}/avatar`,
@@ -97,31 +102,36 @@ export let getUserImage = (id) => {
   axios
     .request(options)
     .then((res) => {
-      console.log(res.data);
+      // console.log(res.request.responseURL);
+      setImgAccount(res.request.responseURL);
     })
     .catch((err) => console.log(err.response.data.error));
 };
 
-export let uploadAvatar = (imageFile) => {
-  let bodyFormData = new FormData();
-  bodyFormData.append("avatar", imageFile);
-  const options = {
+export let uploadAvatar = (imageFile, id, dispatchAvatar) => {
+  let myHeaders = new Headers();
+  myHeaders.append("Authorization", "Bearer " + localStorage.getItem("token"));
+
+  let formdata = new FormData();
+  formdata.append("avatar", imageFile, imageFile.name);
+
+  let requestOptions = {
     method: "POST",
-    url: `${domain}/user/me/avatar`,
-    headers: {
-      Authorization: `${localStorage.getItem("token")}`,
-      "Content-Type": "multipart/form-data",
-      "Access-Control-Allow-Origin": "*",
-    },
-    data: bodyFormData,
+    headers: myHeaders,
+    body: formdata,
+    redirect: "follow",
   };
 
-  axios
-    .request(options)
-    .then((res) => {
-      console.log(res.data);
+  fetch(`${domain}/user/me/avatar`, requestOptions)
+    .then((response) => response.text())
+    .then((result) => {
+      console.log(result);
     })
-    .catch((err) => alert(err.response.data));
+    .then(() => {
+      getUserImage(id, dispatchAvatar);
+      window.location.reload();
+    })
+    .catch((error) => console.log("error", error));
 };
 
 //API Logout
@@ -138,7 +148,7 @@ export let logout = (navigate) => {
       console.log(res.data);
     })
     .then(() => navigate("/"))
-    .catch((err) => alert(err.response.data));
+    .catch((err) => toast.error(err.response.data));
 };
 
 //API Task
@@ -157,7 +167,7 @@ export let getAllTask = (setTaskList) => {
     .then((res) => {
       setTaskList(res.data.data);
     })
-    .catch((err) => alert(err.response.data));
+    .catch((err) => console.log(err.response.data));
 };
 
 export let addTask = (
@@ -190,7 +200,7 @@ export let addTask = (
     .then(() => {
       console.log(count);
     })
-    .catch((err) => alert(err.response.data));
+    .catch((err) => console.log(err.response.data));
 };
 
 export let deleteTask = (id, setTask, count, dispatchCurPage) => {

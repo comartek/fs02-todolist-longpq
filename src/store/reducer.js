@@ -6,6 +6,7 @@ import {
   CURRENT_PAGE,
   SET_ALLTASK,
   SET_USER,
+  SET_AVATAR,
 } from "./constains";
 
 const initialState = {
@@ -14,9 +15,12 @@ const initialState = {
   currentPage: 1,
   allTask: [],
   user: {},
+  avatar:
+    "https://www.meme-arsenal.com/memes/8b6f5f94a53dbc3c8240347693830120.jpg",
 };
 
 const rootReducer = (state = initialState, action) => {
+  console.log(state.avatar);
   switch (action.type) {
     case SET_TODOS:
       return {
@@ -55,6 +59,11 @@ const rootReducer = (state = initialState, action) => {
       return {
         ...state,
         user: action.payload,
+      };
+    case SET_AVATAR:
+      return {
+        ...state,
+        avatar: action.payload,
       };
     default:
       return state;

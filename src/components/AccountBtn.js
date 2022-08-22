@@ -5,8 +5,8 @@ import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import Popup from "reactjs-popup";
 import { getLoggedInUser, getUserImage, logout } from "../Data";
-import { setUser } from "../store/actions";
-import { userSelector } from "../store/selectors";
+import { setAvatar, setUser } from "../store/actions";
+import { avatarSelector, userSelector } from "../store/selectors";
 import BtnUI from "./BtnUI";
 import UpdateInfo from "./UpdateInfo";
 
@@ -23,13 +23,28 @@ let AccountBtn = (props) => {
     dispatchRedux(setUser(data));
   };
 
+  let dispatchAvatar = (data) => {
+    dispatchRedux(setAvatar(data));
+  };
+
+  let imgAccount = useSelector(avatarSelector);
+
+  // const avatar = useSelector((state) => state.avatar);
+
+  // console.log("imgAccount", imgAccount);
+  // console.log("∂avatar", avatar);
+
   useEffect(() => {
     getLoggedInUser(dispatchUser);
-    getUserImage(user._id);
   }, []);
 
-  let imgAccount =
-    "https://www.meme-arsenal.com/memes/8b6f5f94a53dbc3c8240347693830120.jpg";
+  useEffect(() => {
+    getUserImage(user._id, dispatchAvatar);
+  }, [user]);
+
+  useEffect(() => {
+    console.log("gfgg", imgAccount);
+  }, [imgAccount]);
 
   return (
     <div className="flex mb-3">
@@ -64,7 +79,12 @@ let AccountBtn = (props) => {
               <div className="font-bold text-red-400">{user.age}</div>
             </div>
           </div>
-          <UpdateInfo user={user} setUser={dispatchUser} />
+          <UpdateInfo
+            user={user}
+            setUser={dispatchUser}
+            imgAccount={imgAccount}
+            dispatchAvatar={dispatchAvatar}
+          />
           <Popup
             modal
             trigger={

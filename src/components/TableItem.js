@@ -15,7 +15,7 @@ import InputItem from "./InputItem";
 const label = { inputProps: { "aria-label": "Checkbox demo" } };
 
 let TableItem = (props) => {
-  let { item } = props;
+  let { item, id } = props;
   let selector = useSelector(updateCountSelector);
   let curPage = useSelector(currentPageSelector);
   let todos = useSelector(todosSelector);
@@ -34,7 +34,9 @@ let TableItem = (props) => {
 
   return (
     <div className="flex items-center bg-gray-100 rounded-full my-3">
-      <div className="flex-1 justify-center flex w-20">{item._id}</div>
+      <div className="flex-1 justify-center flex w-20">
+        {id + curPage * 10 - 10}
+      </div>
 
       <Popup
         modal
