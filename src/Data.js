@@ -1,6 +1,7 @@
 import axios from "axios";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+import { useForceUpdate } from "./hooks/useForceUpdate";
 const domain = "https://api-nodejs-todolist.herokuapp.com";
 
 //API Register
@@ -26,6 +27,7 @@ export let register = (name, email, password, age, navigate) => {
     .then(() =>
       setTimeout(() => toast.success("Create account successful!!!"), 2000)
     )
+    .then(() => navigate("/"))
     .catch((err) => toast.error(err.response.data));
 };
 
@@ -90,6 +92,7 @@ export let updateInfo = (name, email, age, setUser) => {
       console.log(res.data);
       setUser(res.data.data);
     })
+    .then(() => toast.success("Update information successful!!!"))
     .catch((err) => toast.error(err.response.data));
 };
 
@@ -108,7 +111,7 @@ export let getUserImage = (id, setImgAccount) => {
     .catch((err) => console.log(err.response.data.error));
 };
 
-export let uploadAvatar = (imageFile, id, dispatchAvatar) => {
+export let uploadAvatar = (imageFile, id, dispatchAvatar, setValue, value) => {
   let myHeaders = new Headers();
   myHeaders.append("Authorization", "Bearer " + localStorage.getItem("token"));
 
@@ -129,8 +132,9 @@ export let uploadAvatar = (imageFile, id, dispatchAvatar) => {
     })
     .then(() => {
       getUserImage(id, dispatchAvatar);
-      window.location.reload(false);
+      // window.location.reload(false);
     })
+    .then(() => setValue(value + 1))
     .catch((error) => console.log("error", error));
 };
 
@@ -200,6 +204,7 @@ export let addTask = (
     .then(() => {
       console.log(count);
     })
+    .then(() => toast.success("Add task successful!!!"))
     .catch((err) => console.log(err.response.data));
 };
 
@@ -224,6 +229,7 @@ export let deleteTask = (id, setTask, count, dispatchCurPage) => {
       dispatchCurPage(count);
       console.log(count);
     })
+    .then(() => toast.success("Delete task successful!!!"))
     .catch((err) => console.log(err.response.data));
 };
 
@@ -273,5 +279,6 @@ export let updateTask = (id, completed, curPage, setTask) => {
       getTaskByPagination(10, curPage * 10 - 10, setTask);
       console.log(res.data);
     })
+    .then(() => toast.success("Update task successful!!!"))
     .catch((err) => console.log(err.response.data));
 };

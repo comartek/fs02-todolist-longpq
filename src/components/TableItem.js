@@ -1,3 +1,5 @@
+import { faTrash } from "@fortawesome/free-solid-svg-icons";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { Checkbox } from "@mui/material";
 import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
@@ -11,6 +13,7 @@ import {
 } from "../store/selectors";
 import BtnUI from "./BtnUI";
 import InputItem from "./InputItem";
+import InputContent from "./UpdateContent/InputContent";
 
 const label = { inputProps: { "aria-label": "Checkbox demo" } };
 
@@ -20,8 +23,7 @@ let TableItem = (props) => {
   let curPage = useSelector(currentPageSelector);
   let todos = useSelector(todosSelector);
 
-  let [content, setContent] = useState("");
-  let [isOpen, setIsOpen] = useState(false);
+  let [isOpenDelete, setIsOpenDelete] = useState(false);
 
   let dispatchRedux = useDispatch();
   let dispatchTodos = (data) => {
@@ -38,14 +40,15 @@ let TableItem = (props) => {
         {id + curPage * 10 - 10}
       </div>
 
-      <Popup
+      <InputContent item={item} />
+      {/* <Popup
         modal
         trigger={
           <button
             className="flex-1 justify-center flex max-w-md hover:text-red-400"
             // style={{ maxWidth: 50, height: "auto" }}
           >
-            <p>{item.description}</p>
+            
           </button>
         }
         position={"bottom center"}
@@ -75,22 +78,12 @@ let TableItem = (props) => {
             }}
           />
         </div>
-      </Popup>
+      </Popup> */}
 
       <div className="flex-1 justify-center flex">
         {item.createdAt.substring(0, 10)}
       </div>
       <div className="flex-1 justify-center flex items-center">
-        <button
-          className="text-white bg-red-400 p-2 rounded-md text-sm h-fit"
-          onClick={() => {
-            // dispatchTodos(item);
-            deleteTask(item._id, dispatchTodos, curPage, dispatchCurPage);
-          }}
-        >
-          delete
-        </button>
-        {/* <input type="checkbox" className="w-12 h-12 ml-3" /> */}
         <Checkbox
           {...label}
           defaultChecked
@@ -100,6 +93,40 @@ let TableItem = (props) => {
           }
           checked={item.completed}
         />
+
+        <Popup
+          modal
+          trigger={
+            <button className="text-red-400 p-2 rounded-md text-sm h-fit">
+              <FontAwesomeIcon icon={faTrash} />
+            </button>
+          }
+          position={"bottom center"}
+          onOpen={() => setIsOpenDelete(true)}
+          open={isOpenDelete}
+          contentStyle={{
+            borderRadius: 5,
+          }}
+        >
+          <div className="rounded-md flex flex-col p-5">
+            <div>Are you sure want to delete {item.description} task?</div>
+            <div className="flex items-center self-end">
+              <button
+                className="text-red-400 p-3 mt-3"
+                onClick={() => setIsOpenDelete(false)}
+              >
+                Cancel
+              </button>
+              <BtnUI
+                text="Apply"
+                action={() => {
+                  deleteTask(item._id, dispatchTodos, curPage, dispatchCurPage);
+                  setIsOpenDelete(false);
+                }}
+              />
+            </div>
+          </div>
+        </Popup>
       </div>
     </div>
   );

@@ -13,6 +13,7 @@ import { addTask, getAllTask, getTaskByPagination } from "./Data";
 import PaginationUI from "./components/Pagination";
 import BtnUI from "./components/BtnUI";
 import { currentPageSelector } from "./store/selectors";
+import { toast, ToastContainer } from "react-toastify";
 
 // history.pushState(null, null, location.href);
 // window.onpopstate = function (event) {
@@ -109,7 +110,7 @@ function App() {
                       dispatchCurPage
                     );
                   } else {
-                    alert("content or date is invalid");
+                    toast.error("content or date is invalid");
                   }
                 }}
               />
@@ -132,6 +133,18 @@ function App() {
           setAllTask={setAllTask}
         />
       </div>
+
+      <ToastContainer
+        position="bottom-center"
+        autoClose={2000}
+        hideProgressBar={false}
+        newestOnTop={false}
+        closeOnClick
+        rtl={false}
+        pauseOnFocusLoss={false}
+        draggable
+        pauseOnHover={false}
+      />
     </div>
   );
 }

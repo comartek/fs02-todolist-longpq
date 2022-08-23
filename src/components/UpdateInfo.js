@@ -4,18 +4,28 @@ import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import Popup from "reactjs-popup";
 import { getUserImage, updateInfo, uploadAvatar } from "../Data";
+import { useForceUpdate } from "../hooks/useForceUpdate";
 import { setAvatar } from "../store/actions";
 import { avatarSelector } from "../store/selectors";
 import BtnUI from "./BtnUI";
 import InputItem from "./InputItem";
 
 const UpdateInfo = (props) => {
-  let { user, setUser, imgAccount, dispatchAvatar } = props;
+  let { user, setUser, imgAccount } = props;
+
+  const [value, setValue] = useState(0);
 
   let [isOpen, setIsOpen] = useState(false);
   let [name, setName] = useState("");
   let [email, setEmail] = useState("");
   let [age, setAge] = useState(0);
+
+  // const forceUpdate = useForceUpdate();
+
+  let dispatchRedux = useDispatch();
+  let dispatchAvatar = (data) => {
+    dispatchRedux(setAvatar(data));
+  };
 
   useEffect(() => {
     setName(user.name);
@@ -24,9 +34,9 @@ const UpdateInfo = (props) => {
   }, []);
 
   useEffect(() => {
-    // getUserImage(user._id, dispatchAvatar);
+    getUserImage(user._id, dispatchAvatar);
     console.log("11111", imgAccount);
-  }, [imgAccount]);
+  }, [value, imgAccount]);
 
   return (
     <div className="flex">
@@ -58,7 +68,13 @@ const UpdateInfo = (props) => {
               >
                 <input
                   onChange={(e) => {
-                    uploadAvatar(e.target.files[0], user._id, dispatchAvatar);
+                    uploadAvatar(
+                      e.target.files[0],
+                      user._id,
+                      dispatchAvatar,
+                      setValue,
+                      value
+                    );
                   }}
                   type="file"
                   className="hidden"

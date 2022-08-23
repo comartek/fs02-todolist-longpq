@@ -20,7 +20,6 @@ const initialState = {
 };
 
 const rootReducer = (state = initialState, action) => {
-  console.log(state.avatar);
   switch (action.type) {
     case SET_TODOS:
       return {
