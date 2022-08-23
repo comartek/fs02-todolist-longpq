@@ -7,6 +7,11 @@ import { login } from "./Data";
 import { validate, validatePassword } from "./validate";
 import "react-toastify/dist/ReactToastify.css";
 
+window.history.pushState(null, null, window.location.href);
+window.onpopstate = function (event) {
+  window.history.go(1);
+};
+
 let Login = (props) => {
   let navigate = useNavigate();
   let [email, setEmail] = useState("");

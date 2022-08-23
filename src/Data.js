@@ -129,7 +129,7 @@ export let uploadAvatar = (imageFile, id, dispatchAvatar) => {
     })
     .then(() => {
       getUserImage(id, dispatchAvatar);
-      window.location.reload();
+      window.location.reload(false);
     })
     .catch((error) => console.log("error", error));
 };
