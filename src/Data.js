@@ -111,7 +111,7 @@ export let getUserImage = (id, setImgAccount) => {
     .catch((err) => console.log(err.response.data.error));
 };
 
-export let uploadAvatar = (imageFile, id, dispatchAvatar, setValue, value) => {
+export let uploadAvatar = (imageFile, id, dispatchAvatar, forceUpdate) => {
   let myHeaders = new Headers();
   myHeaders.append("Authorization", "Bearer " + localStorage.getItem("token"));
 
@@ -134,7 +134,7 @@ export let uploadAvatar = (imageFile, id, dispatchAvatar, setValue, value) => {
       getUserImage(id, dispatchAvatar);
       // window.location.reload(false);
     })
-    .then(() => setValue(value + 1))
+    .then(forceUpdate())
     .catch((error) => console.log("error", error));
 };
 

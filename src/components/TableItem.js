@@ -41,44 +41,6 @@ let TableItem = (props) => {
       </div>
 
       <InputContent item={item} />
-      {/* <Popup
-        modal
-        trigger={
-          <button
-            className="flex-1 justify-center flex max-w-md hover:text-red-400"
-            // style={{ maxWidth: 50, height: "auto" }}
-          >
-            
-          </button>
-        }
-        position={"bottom center"}
-        onOpen={() => {
-          setContent(item.description);
-          setIsOpen(true);
-        }}
-        open={isOpen}
-        contentStyle={{
-          borderRadius: 5,
-          display: "flex",
-          justifyContent: "center",
-        }}
-      >
-        <div className="w-fit flex mb-10 mt-6">
-          <InputItem
-            placeholder="Content"
-            value={content}
-            setValue={setContent}
-          />
-          <div className="w-20"></div>
-          <BtnUI
-            text="Update"
-            action={() => {
-              updateTask(item._id, content, curPage, dispatchTodos);
-              setIsOpen(false);
-            }}
-          />
-        </div>
-      </Popup> */}
 
       <div className="flex-1 justify-center flex">
         {item.createdAt.substring(0, 10)}

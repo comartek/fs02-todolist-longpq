@@ -1,6 +1,6 @@
 import { faRefresh } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { useEffect, useState } from "react";
+import { useEffect, useReducer, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import Popup from "reactjs-popup";
 import { getUserImage, updateInfo, uploadAvatar } from "../Data";
@@ -20,7 +20,11 @@ const UpdateInfo = (props) => {
   let [email, setEmail] = useState("");
   let [age, setAge] = useState(0);
 
-  // const forceUpdate = useForceUpdate();
+  const [ignored, forceUpdate] = useReducer((x) => x + 1, 0);
+
+  function handleClick() {
+    forceUpdate();
+  }
 
   let dispatchRedux = useDispatch();
   let dispatchAvatar = (data) => {
@@ -36,7 +40,7 @@ const UpdateInfo = (props) => {
   useEffect(() => {
     getUserImage(user._id, dispatchAvatar);
     console.log("11111", imgAccount);
-  }, [value, imgAccount]);
+  }, [imgAccount, ignored]);
 
   return (
     <div className="flex">
@@ -72,9 +76,9 @@ const UpdateInfo = (props) => {
                       e.target.files[0],
                       user._id,
                       dispatchAvatar,
-                      setValue,
-                      value
+                      forceUpdate
                     );
+                    forceUpdate();
                   }}
                   type="file"
                   className="hidden"

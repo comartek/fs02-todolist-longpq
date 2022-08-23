@@ -35,6 +35,18 @@ let InputItem = (props) => {
       {validate !== undefined ? (
         value === "" ? (
           <div></div>
+        ) : type !== "password" ? (
+          validate(value) ? (
+            <div className="text-green-400 ml-3 mt-2">
+              <FontAwesomeIcon icon={faCheckCircle} className="mr-2" />
+              {placeholder} is valid
+            </div>
+          ) : (
+            <div className="text-red-400 ml-3 mt-2">
+              <FontAwesomeIcon icon={faCircleStop} className="mr-2" />
+              {placeholder} is invalid
+            </div>
+          )
         ) : validate(value) ? (
           <div className="text-green-400 ml-3 mt-2">
             <FontAwesomeIcon icon={faCheckCircle} className="mr-2" />
@@ -43,7 +55,7 @@ let InputItem = (props) => {
         ) : (
           <div className="text-red-400 ml-3 mt-2">
             <FontAwesomeIcon icon={faCircleStop} className="mr-2" />
-            {placeholder} is invalid
+            {placeholder} must be at least 7 characters
           </div>
         )
       ) : (

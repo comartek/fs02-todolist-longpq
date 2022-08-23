@@ -4,7 +4,6 @@ import { toast } from "react-toastify";
 import { updateTask } from "../../Data";
 import { setTodos } from "../../store/actions";
 import { currentPageSelector } from "../../store/selectors";
-import BtnUI from "../BtnUI";
 
 let InputContent = (props) => {
   let { item } = props;
@@ -23,7 +22,7 @@ let InputContent = (props) => {
   }, [item]);
 
   return (
-    <div className="flex items-center ">
+    <div className="flex items-center flex-1">
       <input
         value={content}
         onChange={(e) => {
