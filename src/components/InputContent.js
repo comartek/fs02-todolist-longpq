@@ -3,9 +3,9 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { toast } from "react-toastify";
-import { updateTask } from "../../Data";
-import { setTodos } from "../../store/actions";
-import { currentPageSelector } from "../../store/selectors";
+import { updateTask } from "../services/Data";
+import { setTodos } from "../store/actions";
+import { currentPageSelector } from "../store/selectors";
 
 let InputContent = (props) => {
   let { item } = props;

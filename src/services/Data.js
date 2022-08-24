@@ -1,7 +1,7 @@
 import axios from "axios";
+import instance from "./services";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
-import { useForceUpdate } from "./hooks/useForceUpdate";
 const domain = "https://api-nodejs-todolist.herokuapp.com";
 
 //API Register
@@ -35,7 +35,7 @@ export let register = (name, email, password, age, navigate) => {
 export let login = (email, password, navigate) => {
   const options = {
     method: "POST",
-    url: `${domain}/user/login`,
+    url: `user/login`,
     headers: { "Content-Type": "application/json", Accept: "application/json" },
     data: {
       email: email,
@@ -43,7 +43,7 @@ export let login = (email, password, navigate) => {
     },
   };
 
-  axios
+  instance
     .request(options)
     .then((res) => {
       console.log(res.data);

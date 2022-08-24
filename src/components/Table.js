@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 
 import { useDispatch, useSelector } from "react-redux";
-import { getTaskByPagination } from "../Data";
+import { getTaskByPagination } from "../services/Data";
 import { setTodos } from "../store/actions";
 import { currentPageSelector, todosSelector } from "../store/selectors";
 import TableItem from "./TableItem";

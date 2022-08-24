@@ -1,7 +1,7 @@
 import { Pagination } from "@mui/material";
 import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { getAllTask, getTaskByPagination } from "../Data";
+import { getAllTask, getTaskByPagination } from "../services/Data";
 import { currentPage, setTodos } from "../store/actions";
 import { currentPageSelector, todosSelector } from "../store/selectors";
 
@@ -24,17 +24,14 @@ let PaginationUI = (props) => {
 
   useEffect(() => {
     getAllTask(setAllTask);
-    // console.log(curPage);
   }, [selector, curPage]);
 
   return (
     <div className="flex justify-center">
-      {/* <div className="flex-1"></div> */}
       <Pagination
         count={count}
         defaultPage={1}
         onChange={(e, num) => {
-          // setCurPage(num);
           dispatchCurPage(num);
           getTaskByPagination(10, num * 10 - 10, dispatchSetTodos);
         }}

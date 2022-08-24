@@ -3,11 +3,9 @@ import React from "react";
 import ReactDOM from "react-dom/client";
 import { Provider } from "react-redux";
 import { BrowserRouter, Route, Routes } from "react-router-dom";
-import App from "./App";
 import "./index.css";
-import Login from "./Login";
-import Register from "./Register";
 import rootReducer from "./store/reducer";
+import { App, Login, Register } from "../src/pages";
 // import store from "./store/store";
 const store = createStore(rootReducer);
 

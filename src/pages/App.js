@@ -1,24 +1,17 @@
 import Popup from "reactjs-popup";
-import Table from "./components/Table";
 import "reactjs-popup/dist/index.css";
 import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { currentPage, setTodos, updateCount } from "./store/actions";
 import { MobileDatePicker } from "@mui/x-date-pickers";
 import { TextField } from "@mui/material";
 import { AdapterDateFns } from "@mui/x-date-pickers/AdapterDateFns";
 import { LocalizationProvider } from "@mui/x-date-pickers/LocalizationProvider";
-import AccountBtn from "./components/AccountBtn";
-import { addTask, getAllTask, getTaskByPagination } from "./Data";
-import PaginationUI from "./components/Pagination";
-import BtnUI from "./components/BtnUI";
-import { currentPageSelector } from "./store/selectors";
 import { toast, ToastContainer } from "react-toastify";
-
-// history.pushState(null, null, location.href);
-// window.onpopstate = function (event) {
-//   history.go(1);
-// };
+import { AccountBtn, BtnUI, Table } from "../components";
+import PaginationUI from "../components/Pagination";
+import { currentPage, setTodos, updateCount } from "../store/actions";
+import { addTask, getAllTask, getTaskByPagination } from "../services/Data";
+import { currentPageSelector } from "../store/selectors";
 
 function App() {
   let [content, setContent] = useState("");

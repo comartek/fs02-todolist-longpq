@@ -4,7 +4,7 @@ import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import Popup from "reactjs-popup";
-import { getLoggedInUser, getUserImage, logout } from "../Data";
+import { getLoggedInUser, getUserImage, logout } from "../services/Data";
 import { setAvatar, setUser } from "../store/actions";
 import { avatarSelector, userSelector } from "../store/selectors";
 import BtnUI from "./BtnUI";
@@ -79,13 +79,11 @@ let AccountBtn = (props) => {
           <Popup
             modal
             trigger={
-              // <BtnUI text="Logout" action={() => setIsOpenLogout(true)} />
               <button className="bg-red-400 text-white w-full p-3 rounded-md mt-3">
                 Logout
               </button>
             }
             position={"bottom center"}
-            // closeOnDocumentClick={false}
             onOpen={() => setIsOpenLogout(true)}
             open={isOpenLogout}
             contentStyle={{

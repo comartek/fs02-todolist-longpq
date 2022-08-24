@@ -4,7 +4,7 @@ import { Checkbox } from "@mui/material";
 import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import Popup from "reactjs-popup";
-import { deleteTask, getTaskByPagination, updateTask } from "../Data";
+import { deleteTask, updateTask } from "../services/Data";
 import { currentPage, setTodos } from "../store/actions";
 import {
   currentPageSelector,
@@ -12,7 +12,7 @@ import {
   updateCountSelector,
 } from "../store/selectors";
 import BtnUI from "./BtnUI";
-import InputContent from "./UpdateContent/InputContent";
+import InputContent from "./InputContent";
 
 const label = { inputProps: { "aria-label": "Checkbox demo" } };
 

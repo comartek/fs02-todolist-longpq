@@ -1,23 +1,25 @@
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { ToastContainer } from "react-toastify";
-import BtnUI from "./components/BtnUI";
-import InputItem from "./components/InputItem";
-import { register } from "./Data";
-import { validate, validatePassword } from "./validate";
+import "react-toastify/dist/ReactToastify.css";
+import { BtnUI, InputItem } from "../components";
+import { login } from "../services/Data";
+import { validate, validatePassword } from "../hooks/validate";
 
-let Register = (props) => {
+window.history.pushState(null, null, window.location.href);
+window.onpopstate = function (event) {
+  window.history.go(1);
+};
+
+let Login = (props) => {
   let navigate = useNavigate();
-  let [name, setName] = useState("");
   let [email, setEmail] = useState("");
   let [password, setPassword] = useState("");
-  let [age, setAge] = useState("");
 
   return (
     <div className="bg-red-400 h-screen items-center justify-center flex">
       <div className="bg-white text-red-400 w-fit items-center flex flex-col p-5 rounded-md">
-        <div className="font-bold text-xl uppercase">Register</div>
-        <InputItem placeholder="name" value={name} setValue={setName} />
+        <div className="font-bold text-xl uppercase">Login</div>
         <InputItem
           placeholder="email"
           value={email}
@@ -31,16 +33,15 @@ let Register = (props) => {
           value={password}
           setValue={setPassword}
         />
-        <InputItem placeholder="age" value={age} setValue={setAge} />
-        <BtnUI
-          text="Register"
-          action={() => register(name, email, password, age, navigate)}
-        />
+        <BtnUI text="Login" action={() => login(email, password, navigate)} />
         <div>
           <div className="text-gray-600 mt-3">
-            Already have account?{" "}
-            <button className="text-red-400" onClick={() => navigate("/")}>
-              Login
+            Have no account?{" "}
+            <button
+              className="text-red-400"
+              onClick={() => navigate("/Register")}
+            >
+              Register
             </button>
           </div>
         </div>
@@ -53,12 +54,12 @@ let Register = (props) => {
         newestOnTop={false}
         closeOnClick
         rtl={false}
-        pauseOnFocusLoss
+        pauseOnFocusLoss={false}
         draggable
-        pauseOnHover
+        pauseOnHover={false}
       />
     </div>
   );
 };
 
-export default Register;
+export default Login;
