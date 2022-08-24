@@ -12,7 +12,6 @@ import {
   updateCountSelector,
 } from "../store/selectors";
 import BtnUI from "./BtnUI";
-import InputItem from "./InputItem";
 import InputContent from "./UpdateContent/InputContent";
 
 const label = { inputProps: { "aria-label": "Checkbox demo" } };

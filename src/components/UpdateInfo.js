@@ -2,9 +2,10 @@ import { faRefresh } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { useEffect, useReducer, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
+import { toast, ToastContainer } from "react-toastify";
 import Popup from "reactjs-popup";
 import { getUserImage, updateInfo, uploadAvatar } from "../Data";
-import { useForceUpdate } from "../hooks/useForceUpdate";
+// import { useForceUpdate } from "../hooks/useForceUpdate";
 import { setAvatar } from "../store/actions";
 import { avatarSelector } from "../store/selectors";
 import BtnUI from "./BtnUI";
@@ -13,18 +14,21 @@ import InputItem from "./InputItem";
 const UpdateInfo = (props) => {
   let { user, setUser, imgAccount } = props;
 
-  const [value, setValue] = useState(0);
+  // const [value, setValue] = useState(0);
 
   let [isOpen, setIsOpen] = useState(false);
   let [name, setName] = useState("");
   let [email, setEmail] = useState("");
   let [age, setAge] = useState(0);
 
-  const [ignored, forceUpdate] = useReducer((x) => x + 1, 0);
+  // const [ignored, forceUpdate] = useReducer((x) => x + 1, 0);
 
-  function handleClick() {
-    forceUpdate();
-  }
+  // function useForceUpdate() {
+  //   console.log("forceUpdate");
+  //   return () => setValue((value) => value + 1);
+  // }
+
+  // const forceUpdate = useForceUpdate();
 
   let dispatchRedux = useDispatch();
   let dispatchAvatar = (data) => {
@@ -36,11 +40,6 @@ const UpdateInfo = (props) => {
     setEmail(user.email);
     setAge(user.age);
   }, []);
-
-  useEffect(() => {
-    getUserImage(user._id, dispatchAvatar);
-    console.log("11111", imgAccount);
-  }, [imgAccount, ignored]);
 
   return (
     <div className="flex">
@@ -64,7 +63,7 @@ const UpdateInfo = (props) => {
           <div>
             <div className="flex items-center">
               <label
-                className="w-40 h-40 bg-cover mr-5 mt-3 rounded-full cursor-pointer"
+                className="w-40 h-40 bg-cover mr-5 rounded-full cursor-pointer"
                 style={{
                   backgroundImage: `url(${imgAccount})`,
                   display: "inline-block",
@@ -72,13 +71,7 @@ const UpdateInfo = (props) => {
               >
                 <input
                   onChange={(e) => {
-                    uploadAvatar(
-                      e.target.files[0],
-                      user._id,
-                      dispatchAvatar,
-                      forceUpdate
-                    );
-                    forceUpdate();
+                    uploadAvatar(e.target.files[0], user._id, dispatchAvatar);
                   }}
                   type="file"
                   className="hidden"

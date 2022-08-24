@@ -12,7 +12,7 @@ let InputItem = (props) => {
   let [isShowPassword, setIsShowPassword] = useState(false);
 
   return (
-    <div className="my-1 relative">
+    <div className="my-2 relative">
       <input
         type={
           type === "password" && isShowPassword === false ? "password" : "text"

@@ -29,11 +29,6 @@ let AccountBtn = (props) => {
 
   let imgAccount = useSelector(avatarSelector);
 
-  // const avatar = useSelector((state) => state.avatar);
-
-  // console.log("imgAccount", imgAccount);
-  // console.log("∂avatar", avatar);
-
   useEffect(() => {
     getLoggedInUser(dispatchUser);
   }, []);
@@ -41,10 +36,6 @@ let AccountBtn = (props) => {
   useEffect(() => {
     getUserImage(user._id, dispatchAvatar);
   }, [user]);
-
-  useEffect(() => {
-    console.log("gfgg", imgAccount);
-  }, [imgAccount]);
 
   return (
     <div className="flex mb-3">

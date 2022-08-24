@@ -105,13 +105,12 @@ export let getUserImage = (id, setImgAccount) => {
   axios
     .request(options)
     .then((res) => {
-      // console.log(res.request.responseURL);
-      setImgAccount(res.request.responseURL);
+      setImgAccount(res.request.responseURL + `?${Date.now()}`);
     })
     .catch((err) => console.log(err.response.data.error));
 };
 
-export let uploadAvatar = (imageFile, id, dispatchAvatar, forceUpdate) => {
+export let uploadAvatar = (imageFile, id, dispatchAvatar) => {
   let myHeaders = new Headers();
   myHeaders.append("Authorization", "Bearer " + localStorage.getItem("token"));
 
@@ -123,19 +122,25 @@ export let uploadAvatar = (imageFile, id, dispatchAvatar, forceUpdate) => {
     headers: myHeaders,
     body: formdata,
     redirect: "follow",
+    caches: "reload",
   };
 
-  fetch(`${domain}/user/me/avatar`, requestOptions)
-    .then((response) => response.text())
-    .then((result) => {
-      console.log(result);
-    })
-    .then(() => {
-      getUserImage(id, dispatchAvatar);
-      // window.location.reload(false);
-    })
-    .then(forceUpdate())
-    .catch((error) => console.log("error", error));
+  toast.promise(
+    fetch(`${domain}/user/me/avatar`, requestOptions)
+      .then((response) => response.text())
+      .then((result) => {
+        console.log(result);
+      })
+      .then(() => {
+        getUserImage(id, dispatchAvatar);
+      })
+      .catch((error) => console.log("error", error)),
+    {
+      pending: "Uploading...",
+      success: "Upload successful!!!",
+      error: "Upload failed",
+    }
+  );
 };
 
 //API Logout
