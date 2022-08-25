@@ -1,12 +1,15 @@
+import { useSelector } from "react-redux";
 import instance from "../../services/services";
+import { filterIsChooseSelector } from "../../store/selectors";
+import useFilter from "../useFilter";
 import useToast from "../useToast";
 import useGetAllTask from "./useGetAllTask";
-import useGetTaskByPaginition from "./useGetTaskByPagination";
 
 let useDeleteTask = () => {
   const getAllTask = useGetAllTask();
-  const getTaskByPagination = useGetTaskByPaginition();
   const toast = useToast();
+  const filter = useFilter();
+  const filterIsChoose = useSelector(filterIsChooseSelector);
   let deleteTask = (id, count, dispatchCurPage) => {
     const options = {
       method: "DELETE",
@@ -21,8 +24,7 @@ let useDeleteTask = () => {
       instance
         .request(options)
         .then((res) => {
-          console.log(res.data);
-          getTaskByPagination(10, count * 10 - 10);
+          filter(filterIsChoose);
         })
         .then(() => {
           getAllTask();

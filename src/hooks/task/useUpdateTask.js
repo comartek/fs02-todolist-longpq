@@ -1,10 +1,13 @@
+import { useSelector } from "react-redux";
 import instance from "../../services/services";
+import { filterIsChooseSelector } from "../../store/selectors";
+import useFilter from "../useFilter";
 import useToast from "../useToast";
-import useGetTaskByPaginition from "./useGetTaskByPagination";
 
 let useUpdateTask = () => {
-  const getTaskByPagination = useGetTaskByPaginition();
   const toast = useToast();
+  const filter = useFilter();
+  const filterIsChoose = useSelector(filterIsChooseSelector);
   let updateTask = (id, completed, curPage) => {
     let data =
       completed === true || completed === false
@@ -26,11 +29,9 @@ let useUpdateTask = () => {
       instance
         .request(options)
         .then((res) => {
-          // setTask(res.data.data);
-          getTaskByPagination(10, curPage * 10 - 10);
+          filter(filterIsChoose);
           console.log(res.data);
         })
-        // .then(() => toast.success("Update task successful!!!"))
         .catch((err) => console.log(err.response.data)),
       "Updating task...",
       "Update task successful!!!",

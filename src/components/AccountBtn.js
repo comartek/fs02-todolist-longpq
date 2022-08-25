@@ -1,21 +1,18 @@
 import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { useNavigate } from "react-router-dom";
 import Popup from "reactjs-popup";
 import useLogout from "../hooks/useLogout";
 import useGetUserImage from "../hooks/user/useGetUserImage";
 import useGetLoggedInUser from "../hooks/user/useLoggedInUser";
-import { logout } from "../services/Data";
 import { setAvatar, setUser } from "../store/actions";
-import { avatarSelector, userSelector } from "../store/selectors";
+import { avatarSelector } from "../store/selectors";
 import BtnUI from "./BtnUI";
 import UpdateInfo from "./UpdateInfo";
 
 let AccountBtn = (props) => {
+  const { user } = props;
   let [isOpen, setIsOpen] = useState(false);
   let [isOpenLogout, setIsOpenLogout] = useState(false);
-
-  let user = useSelector(userSelector);
 
   let dispatchRedux = useDispatch();
   let dispatchUser = (data) => {
@@ -34,10 +31,11 @@ let AccountBtn = (props) => {
 
   useEffect(() => {
     getUserImage(user._id);
+    console.log(user);
   }, [user]);
 
   return (
-    <div className="flex mb-3">
+    <div className="flex">
       <Popup
         trigger={
           <button
@@ -90,7 +88,11 @@ let AccountBtn = (props) => {
             }}
           >
             <div className="rounded-md flex flex-col p-5">
-              <div>Are you sure want to logout {user.name} account?</div>
+              <div className="flex">
+                Are you sure want to logout{" "}
+                <p className="font-bold text-red-400 mx-1">{user.name}</p>{" "}
+                account?
+              </div>
               <div className="flex items-center self-end">
                 <button
                   className="text-red-400 p-3 mt-3"

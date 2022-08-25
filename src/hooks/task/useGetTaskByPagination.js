@@ -1,6 +1,6 @@
 import { useDispatch } from "react-redux";
 import instance from "../../services/services";
-import { setTodos } from "../../store/actions";
+import { setPaginationVisible, setTodos } from "../../store/actions";
 import useToast from "../useToast";
 
 let useGetTaskByPaginition = () => {
@@ -8,6 +8,10 @@ let useGetTaskByPaginition = () => {
 
   let dispatchSetTodos = (data) => {
     dispatchRedux(setTodos(data));
+  };
+
+  const dispatchPaginationVisible = (data) => {
+    dispatchRedux(setPaginationVisible(data));
   };
 
   const toast = useToast();
@@ -26,28 +30,16 @@ let useGetTaskByPaginition = () => {
       },
     };
 
-    // toast.promise(
-    //   instance
-    //     .request(options)
-    //     .then((res) => {
-    //       dispatchSetTodos(res.data.data);
-    //     })
-    //     .catch((err) => console.log(err.response.data)),
-    //   {
-    //     pending: "Loading task...",
-    //     success: "Loading successful!!!",
-    //     error: "Loading failed",
-    //   }
-    // );
     toast(
       instance
         .request(options)
         .then((res) => {
           dispatchSetTodos(res.data.data);
+          dispatchPaginationVisible(true);
         })
         .catch((err) => console.log(err.response.data)),
       "Loading task...",
-      "Loading task successful!!!",
+      "Load task successful!!!",
       "Loading failed"
     );
   };

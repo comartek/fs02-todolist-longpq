@@ -7,6 +7,8 @@ import {
   SET_ALLTASK,
   SET_USER,
   SET_AVATAR,
+  SET_PAGINATION_VISIBLE,
+  SET_FILTER_IS_CHOOSE,
 } from "./constains";
 
 const initialState = {
@@ -17,6 +19,8 @@ const initialState = {
   user: {},
   avatar:
     "https://www.meme-arsenal.com/memes/8b6f5f94a53dbc3c8240347693830120.jpg",
+  paginationVisible: true,
+  filterIsChoose: "All Task",
 };
 
 const rootReducer = (state = initialState, action) => {
@@ -63,6 +67,16 @@ const rootReducer = (state = initialState, action) => {
       return {
         ...state,
         avatar: action.payload,
+      };
+    case SET_PAGINATION_VISIBLE:
+      return {
+        ...state,
+        paginationVisible: action.payload,
+      };
+    case SET_FILTER_IS_CHOOSE:
+      return {
+        ...state,
+        filterIsChoose: action.payload,
       };
     default:
       return state;

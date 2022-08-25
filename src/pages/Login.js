@@ -3,7 +3,6 @@ import { useNavigate } from "react-router-dom";
 import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { BtnUI, InputItem } from "../components";
-import { login } from "../services/Data";
 import { validate, validatePassword } from "../hooks/validate";
 import useLogin from "../hooks/useLogin";
 
@@ -36,13 +35,7 @@ let Login = (props) => {
           value={password}
           setValue={setPassword}
         />
-        <BtnUI
-          text="Login"
-          action={() =>
-            // login !== undefined ? navigate("/App") : console.log("a")
-            login(email, password, navigate)
-          }
-        />
+        <BtnUI text="Login" action={() => login(email, password, navigate)} />
         <div>
           <div className="text-gray-600 mt-3">
             Have no account?{" "}

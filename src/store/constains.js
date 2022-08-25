@@ -6,3 +6,5 @@ export const CURRENT_PAGE = "current_page";
 export const SET_ALLTASK = "set_alltask";
 export const SET_USER = "set_user";
 export const SET_AVATAR = "set_avatar";
+export const SET_PAGINATION_VISIBLE = "set_pagination_visible";
+export const SET_FILTER_IS_CHOOSE = "set_filter_is_choose";

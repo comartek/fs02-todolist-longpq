@@ -1,13 +1,12 @@
 import { faTrash } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { Checkbox } from "@mui/material";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import Popup from "reactjs-popup";
 import useDeleteTask from "../hooks/task/useDeleteTask";
 import useUpdateTask from "../hooks/task/useUpdateTask";
-import { deleteTask, updateTask } from "../services/Data";
-import { currentPage, setTodos } from "../store/actions";
+import { currentPage } from "../store/actions";
 import { currentPageSelector } from "../store/selectors";
 import BtnUI from "./BtnUI";
 import InputContent from "./InputContent";
@@ -16,16 +15,12 @@ const label = { inputProps: { "aria-label": "Checkbox demo" } };
 
 let TableItem = (props) => {
   let { item, id } = props;
-  // let selector = useSelector(updateCountSelector);
   let curPage = useSelector(currentPageSelector);
-  // let todos = useSelector(todosSelector);
 
   let [isOpenDelete, setIsOpenDelete] = useState(false);
+  let [isShowId, setIsShowId] = useState(false);
 
   let dispatchRedux = useDispatch();
-  let dispatchTodos = (data) => {
-    dispatchRedux(setTodos(data));
-  };
 
   let dispatchCurPage = (data) => {
     dispatchRedux(currentPage(data));
@@ -36,8 +31,13 @@ let TableItem = (props) => {
 
   return (
     <div className="flex items-center bg-gray-100 rounded-full my-3">
-      <div className="flex-1 justify-center flex w-20">
-        {id + curPage * 10 - 10}
+      <div
+        className="flex-1 justify-center flex w-20"
+        onMouseEnter={() => setIsShowId(true)}
+        onMouseLeave={() => setIsShowId(false)}
+      >
+        {/* {id + curPage * 10 - 10} */}
+        {isShowId ? <p>{item._id}</p> : <p>{item._id.substring(0, 5)}...</p>}
       </div>
 
       <InputContent item={item} />
@@ -69,7 +69,11 @@ let TableItem = (props) => {
           }}
         >
           <div className="rounded-md flex flex-col p-5">
-            <div>Are you sure want to delete {item.description} task?</div>
+            <div className="flex">
+              Are you sure want to delete{" "}
+              <p className="font-bold mx-1 text-red-400">{item.description}</p>{" "}
+              task?
+            </div>
             <div className="flex items-center self-end">
               <button
                 className="text-red-400 p-3 mt-3"

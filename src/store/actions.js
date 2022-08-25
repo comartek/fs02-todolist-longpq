@@ -7,6 +7,8 @@ import {
   SET_ALLTASK,
   SET_USER,
   SET_AVATAR,
+  SET_PAGINATION_VISIBLE,
+  SET_FILTER_IS_CHOOSE,
 } from "./constains";
 
 export const setTodos = (data) => ({
@@ -46,5 +48,15 @@ export const setUser = (data) => ({
 
 export const setAvatar = (data) => ({
   type: SET_AVATAR,
+  payload: data,
+});
+
+export const setPaginationVisible = (data) => ({
+  type: SET_PAGINATION_VISIBLE,
+  payload: data,
+});
+
+export const setFilterIsChoose = (data) => ({
+  type: SET_FILTER_IS_CHOOSE,
   payload: data,
 });

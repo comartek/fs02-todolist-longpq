@@ -1,11 +1,9 @@
 import { faSave } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { useEffect, useState } from "react";
-import { useDispatch, useSelector } from "react-redux";
+import { useSelector } from "react-redux";
 import { toast } from "react-toastify";
 import useUpdateTask from "../hooks/task/useUpdateTask";
-import { updateTask } from "../services/Data";
-import { setTodos } from "../store/actions";
 import { currentPageSelector } from "../store/selectors";
 
 let InputContent = (props) => {
@@ -14,11 +12,6 @@ let InputContent = (props) => {
 
   let [isUpdate, setIsUpdate] = useState(false);
   let curPage = useSelector(currentPageSelector);
-
-  let dispatchRedux = useDispatch();
-  let dispatchTodos = (data) => {
-    dispatchRedux(setTodos(data));
-  };
 
   const updateTask = useUpdateTask();
 

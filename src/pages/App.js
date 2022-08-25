@@ -9,9 +9,13 @@ import { LocalizationProvider } from "@mui/x-date-pickers/LocalizationProvider";
 import { toast, ToastContainer } from "react-toastify";
 import { AccountBtn, BtnUI, Table } from "../components";
 import PaginationUI from "../components/Pagination";
-import { currentPage, setTodos, updateCount } from "../store/actions";
-import { getTaskByPagination } from "../services/Data";
-import { allTaskSelector, currentPageSelector } from "../store/selectors";
+import { currentPage, updateCount } from "../store/actions";
+import {
+  allTaskSelector,
+  currentPageSelector,
+  paginationVisibleSelector,
+  userSelector,
+} from "../store/selectors";
 import useGetAllTask from "../hooks/task/useGetAllTask";
 import useAddTask from "../hooks/task/useAddTask";
 import ComboBox from "../components/ComboBox";
@@ -21,22 +25,15 @@ function App() {
   let [date, setDate] = useState("");
   let [isOpen, setIsOpen] = useState(false);
   let [count, setCount] = useState(1);
-  // let [allTask, setAllTask] = useState([]);
 
-  let allTask = useSelector(allTaskSelector);
-  let curPage = useSelector(currentPageSelector);
+  const allTask = useSelector(allTaskSelector);
+  const curPage = useSelector(currentPageSelector);
+  const paginationVisible = useSelector(paginationVisibleSelector);
+  const user = useSelector(userSelector);
 
-  let dispatchRedux = useDispatch();
+  const dispatchRedux = useDispatch();
 
-  let dispatchSetTodos = (data) => {
-    dispatchRedux(setTodos(data));
-  };
-
-  let dispatchUpdateCount = (data) => {
-    dispatchRedux(updateCount(data));
-  };
-
-  let dispatchCurPage = (data) => {
+  const dispatchCurPage = (data) => {
     dispatchRedux(currentPage(data));
   };
 
@@ -47,24 +44,21 @@ function App() {
   const getAllTask = useGetAllTask();
   const addTask = useAddTask();
 
-  let update = () => {
+  const update = () => {
     getAllTask();
     setCount(Math.ceil(allTask.length / 10));
   };
 
   useEffect(() => {
     setCount(Math.ceil(allTask.length / 10));
-    getTaskByPagination(10, 0, dispatchSetTodos);
     dispatchCurPage(1);
   }, []);
-
-  dispatchUpdateCount(count);
 
   return (
     <div className="w-screen h-screen flex bg-red-400 items-center justify-center relative">
       <div className="bg-white rounded-md w-2/3 p-5" style={{ height: 850 }}>
-        <div className="flex bg-sky- items-center justify-between">
-          <AccountBtn />
+        <div className="flex mb-3 items-center justify-between">
+          <AccountBtn user={user} />
           <ComboBox />
         </div>
         <div className="flex flex-row items-center justify-between w-full mb-5">
@@ -123,12 +117,9 @@ function App() {
         </div>
         <Table />
 
-        <PaginationUI
-          count={count}
-          setCount={setCount}
-          allTask={allTask}
-          // setAllTask={setAllTask}
-        />
+        {paginationVisible && (
+          <PaginationUI count={count} setCount={setCount} allTask={allTask} />
+        )}
       </div>
 
       <ToastContainer

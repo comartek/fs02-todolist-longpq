@@ -1,11 +1,13 @@
-import { toast } from "react-toastify";
+import { useSelector } from "react-redux";
 import instance from "../../services/services";
+import { filterIsChooseSelector } from "../../store/selectors";
+import useFilter from "../useFilter";
 import useToast from "../useToast";
-import useGetTaskByPaginition from "./useGetTaskByPagination";
 
 let useAddTask = () => {
-  const getTaskByPagination = useGetTaskByPaginition();
   const toast = useToast();
+  const filter = useFilter();
+  const filterIsChoose = useSelector(filterIsChooseSelector);
   let addTask = (content, updateCount, count, dispatchCurPage) => {
     const options = {
       method: "POST",
@@ -23,8 +25,8 @@ let useAddTask = () => {
       instance
         .request(options)
         .then((res) => {
-          console.log(res.data);
-          getTaskByPagination(10, count * 10 - 10);
+          // console.log(res.data);
+          filter(filterIsChoose);
           updateCount();
           dispatchCurPage(count);
         })
