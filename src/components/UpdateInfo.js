@@ -4,10 +4,10 @@ import { useEffect, useReducer, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { toast, ToastContainer } from "react-toastify";
 import Popup from "reactjs-popup";
+import useUpdateInfo from "../hooks/user/useUpdateInfo";
+import useUploadAvatar from "../hooks/user/useUploadAvatar";
 import { updateInfo, uploadAvatar } from "../services/Data";
-// import { useForceUpdate } from "../hooks/useForceUpdate";
 import { setAvatar } from "../store/actions";
-import { avatarSelector } from "../store/selectors";
 import BtnUI from "./BtnUI";
 import InputItem from "./InputItem";
 
@@ -19,10 +19,8 @@ const UpdateInfo = (props) => {
   let [email, setEmail] = useState("");
   let [age, setAge] = useState(0);
 
-  let dispatchRedux = useDispatch();
-  let dispatchAvatar = (data) => {
-    dispatchRedux(setAvatar(data));
-  };
+  const updateInfo = useUpdateInfo();
+  const uploadAvatar = useUploadAvatar();
 
   useEffect(() => {
     setName(user.name);
@@ -60,7 +58,7 @@ const UpdateInfo = (props) => {
               >
                 <input
                   onChange={(e) => {
-                    uploadAvatar(e.target.files[0], user._id, dispatchAvatar);
+                    uploadAvatar(e.target.files[0], user._id);
                   }}
                   type="file"
                   className="hidden"
@@ -80,7 +78,7 @@ const UpdateInfo = (props) => {
               <BtnUI
                 text="Update"
                 action={() => {
-                  updateInfo(name, email, age, setUser);
+                  updateInfo(name, email, age);
                   setIsOpen(false);
                 }}
               />

@@ -12,6 +12,7 @@ import PaginationUI from "../components/Pagination";
 import { currentPage, setTodos, updateCount } from "../store/actions";
 import { addTask, getAllTask, getTaskByPagination } from "../services/Data";
 import { currentPageSelector } from "../store/selectors";
+import useGetAllTask from "../hooks/task/useGetAllTask";
 
 function App() {
   let [content, setContent] = useState("");
@@ -40,8 +41,10 @@ function App() {
     setDate(newValue.toLocaleDateString("en-US"));
   };
 
+  const getAllTask = useGetAllTask();
+
   let update = () => {
-    getAllTask(setAllTask);
+    setAllTask(getAllTask);
     setCount(Math.ceil(allTask.length / 10));
   };
 

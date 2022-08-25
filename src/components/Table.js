@@ -1,8 +1,7 @@
 import { useEffect, useState } from "react";
 
-import { useDispatch, useSelector } from "react-redux";
-import { getTaskByPagination } from "../services/Data";
-import { setTodos } from "../store/actions";
+import { useSelector } from "react-redux";
+import useGetTaskByPaginition from "../hooks/task/useGetTaskByPagination";
 import { currentPageSelector, todosSelector } from "../store/selectors";
 import TableItem from "./TableItem";
 
@@ -10,16 +9,10 @@ let Table = (props) => {
   let selector = useSelector(todosSelector);
   let curPage = useSelector(currentPageSelector);
 
-  let dispatchRedux = useDispatch();
-
-  let dispatchSetTodos = (data) => {
-    dispatchRedux(setTodos(data));
-  };
-
-  // let [todosList, setTodosList] = useState([]);
+  const getTaskByPagination = useGetTaskByPaginition();
 
   useEffect(() => {
-    getTaskByPagination(10, curPage * 10 - 10, dispatchSetTodos);
+    getTaskByPagination(10, curPage * 10 - 10);
   }, []);
 
   return (

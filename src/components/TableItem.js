@@ -4,13 +4,11 @@ import { Checkbox } from "@mui/material";
 import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import Popup from "reactjs-popup";
+import useDeleteTask from "../hooks/task/useDeleteTask";
+import useUpdateTask from "../hooks/task/useUpdateTask";
 import { deleteTask, updateTask } from "../services/Data";
 import { currentPage, setTodos } from "../store/actions";
-import {
-  currentPageSelector,
-  todosSelector,
-  updateCountSelector,
-} from "../store/selectors";
+import { currentPageSelector } from "../store/selectors";
 import BtnUI from "./BtnUI";
 import InputContent from "./InputContent";
 
@@ -18,9 +16,9 @@ const label = { inputProps: { "aria-label": "Checkbox demo" } };
 
 let TableItem = (props) => {
   let { item, id } = props;
-  let selector = useSelector(updateCountSelector);
+  // let selector = useSelector(updateCountSelector);
   let curPage = useSelector(currentPageSelector);
-  let todos = useSelector(todosSelector);
+  // let todos = useSelector(todosSelector);
 
   let [isOpenDelete, setIsOpenDelete] = useState(false);
 
@@ -29,9 +27,12 @@ let TableItem = (props) => {
     dispatchRedux(setTodos(data));
   };
 
-  let dispatchCurPage = (data) => {
-    dispatchRedux(currentPage(data));
-  };
+  // let dispatchCurPage = (data) => {
+  //   dispatchRedux(currentPage(data));
+  // };
+
+  const deleteTask = useDeleteTask();
+  const updateTask = useUpdateTask();
 
   return (
     <div className="flex items-center bg-gray-100 rounded-full my-3">
@@ -49,9 +50,7 @@ let TableItem = (props) => {
           {...label}
           defaultChecked
           color="success"
-          onChange={(e) =>
-            updateTask(item._id, e.target.checked, curPage, dispatchTodos)
-          }
+          onChange={(e) => updateTask(item._id, e.target.checked, curPage)}
           checked={item.completed}
         />
 
@@ -81,7 +80,7 @@ let TableItem = (props) => {
               <BtnUI
                 text="Apply"
                 action={() => {
-                  deleteTask(item._id, dispatchTodos, curPage, dispatchCurPage);
+                  deleteTask(item._id, dispatchTodos, curPage);
                   setIsOpenDelete(false);
                 }}
               />

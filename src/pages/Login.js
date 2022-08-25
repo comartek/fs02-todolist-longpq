@@ -5,6 +5,7 @@ import "react-toastify/dist/ReactToastify.css";
 import { BtnUI, InputItem } from "../components";
 import { login } from "../services/Data";
 import { validate, validatePassword } from "../hooks/validate";
+import useLogin from "../hooks/useLogin";
 
 window.history.pushState(null, null, window.location.href);
 window.onpopstate = function (event) {
@@ -15,6 +16,8 @@ let Login = (props) => {
   let navigate = useNavigate();
   let [email, setEmail] = useState("");
   let [password, setPassword] = useState("");
+
+  const login = useLogin();
 
   return (
     <div className="bg-red-400 h-screen items-center justify-center flex">
@@ -33,7 +36,13 @@ let Login = (props) => {
           value={password}
           setValue={setPassword}
         />
-        <BtnUI text="Login" action={() => login(email, password, navigate)} />
+        <BtnUI
+          text="Login"
+          action={() =>
+            // login !== undefined ? navigate("/App") : console.log("a")
+            login(email, password, navigate)
+          }
+        />
         <div>
           <div className="text-gray-600 mt-3">
             Have no account?{" "}

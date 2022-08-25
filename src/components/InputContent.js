@@ -3,6 +3,7 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { toast } from "react-toastify";
+import useUpdateTask from "../hooks/task/useUpdateTask";
 import { updateTask } from "../services/Data";
 import { setTodos } from "../store/actions";
 import { currentPageSelector } from "../store/selectors";
@@ -18,6 +19,8 @@ let InputContent = (props) => {
   let dispatchTodos = (data) => {
     dispatchRedux(setTodos(data));
   };
+
+  const updateTask = useUpdateTask();
 
   useEffect(() => {
     setContent(item.description);
@@ -39,7 +42,7 @@ let InputContent = (props) => {
           onClick={() => {
             if (content === "") toast.error("Content is invalid");
             else {
-              updateTask(item._id, content, curPage, dispatchTodos);
+              updateTask(item._id, content, curPage);
               setIsUpdate(false);
             }
           }}

@@ -1,10 +1,11 @@
-import { faRefresh, faUpload } from "@fortawesome/free-solid-svg-icons";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import Popup from "reactjs-popup";
-import { getLoggedInUser, getUserImage, logout } from "../services/Data";
+import useLogout from "../hooks/useLogout";
+import useGetUserImage from "../hooks/user/useGetUserImage";
+import useGetLoggedInUser from "../hooks/user/useLoggedInUser";
+import { logout } from "../services/Data";
 import { setAvatar, setUser } from "../store/actions";
 import { avatarSelector, userSelector } from "../store/selectors";
 import BtnUI from "./BtnUI";
@@ -14,7 +15,7 @@ let AccountBtn = (props) => {
   let [isOpen, setIsOpen] = useState(false);
   let [isOpenLogout, setIsOpenLogout] = useState(false);
 
-  let navigate = useNavigate();
+  const navigate = useNavigate();
 
   let user = useSelector(userSelector);
 
@@ -29,12 +30,12 @@ let AccountBtn = (props) => {
 
   let imgAccount = useSelector(avatarSelector);
 
-  useEffect(() => {
-    getLoggedInUser(dispatchUser);
-  }, []);
+  const loggedInUser = useGetLoggedInUser();
+  const logout = useLogout();
+  const getUserImage = useGetUserImage();
 
   useEffect(() => {
-    getUserImage(user._id, dispatchAvatar);
+    getUserImage(user._id);
   }, [user]);
 
   return (
@@ -71,7 +72,7 @@ let AccountBtn = (props) => {
             </div>
           </div>
           <UpdateInfo
-            user={user}
+            user={loggedInUser}
             setUser={dispatchUser}
             imgAccount={imgAccount}
             dispatchAvatar={dispatchAvatar}
@@ -99,7 +100,7 @@ let AccountBtn = (props) => {
                 >
                   Cancel
                 </button>
-                <BtnUI text="Apply" action={() => logout(navigate("/"))} />
+                <BtnUI text="Apply" action={() => logout()} />
               </div>
             </div>
           </Popup>

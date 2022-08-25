@@ -3,8 +3,8 @@ import { useNavigate } from "react-router-dom";
 import { ToastContainer } from "react-toastify";
 import BtnUI from "../components/BtnUI";
 import InputItem from "../components/InputItem";
-import { register } from "../services/Data";
 import { validate, validatePassword } from "../hooks/validate";
+import { useRegister } from "../hooks";
 
 let Register = (props) => {
   let navigate = useNavigate();
@@ -12,6 +12,8 @@ let Register = (props) => {
   let [email, setEmail] = useState("");
   let [password, setPassword] = useState("");
   let [age, setAge] = useState("");
+
+  const register = useRegister();
 
   return (
     <div className="bg-red-400 h-screen items-center justify-center flex">
