@@ -1,25 +1,32 @@
 import { useState } from "react";
+import { useDispatch } from "react-redux";
 import instance from "../../services/services";
+import { setAllTask } from "../../store/actions";
 
 let useGetAllTask = () => {
-  let [taskList, setTaskList] = useState([]);
-  const options = {
-    method: "GET",
-    url: `task`,
-    headers: {
-      "Content-Type": "application/json",
-      Authorization: `${localStorage.getItem("token")}`,
-    },
+  const dispatchRedux = useDispatch();
+  const dispatchAllTask = (data) => {
+    dispatchRedux(setAllTask(data));
+  };
+  let getAllTask = () => {
+    const options = {
+      method: "GET",
+      url: `task`,
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `${localStorage.getItem("token")}`,
+      },
+    };
+
+    instance
+      .request(options)
+      .then((res) => {
+        dispatchAllTask(res.data.data);
+      })
+      .catch((err) => console.log(err.response.data));
   };
 
-  instance
-    .request(options)
-    .then((res) => {
-      setTaskList(res.data.data);
-    })
-    .catch((err) => console.log(err.response.data));
-
-  return taskList;
+  return getAllTask;
 };
 
 export default useGetAllTask;

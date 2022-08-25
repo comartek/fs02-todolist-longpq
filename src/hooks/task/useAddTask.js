@@ -4,13 +4,7 @@ import useGetTaskByPaginition from "./useGetTaskByPagination";
 
 let useAddTask = () => {
   const getTaskByPagination = useGetTaskByPaginition();
-  let addTask = (
-    content,
-    dispatchSetTodos,
-    updateCount,
-    count,
-    dispatchCurPage
-  ) => {
+  let addTask = (content, updateCount, count, dispatchCurPage) => {
     const options = {
       method: "POST",
       url: `task`,

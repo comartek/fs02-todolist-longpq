@@ -1,13 +1,9 @@
 import { faRefresh } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { useEffect, useReducer, useState } from "react";
-import { useDispatch, useSelector } from "react-redux";
-import { toast, ToastContainer } from "react-toastify";
+import { useEffect, useState } from "react";
 import Popup from "reactjs-popup";
 import useUpdateInfo from "../hooks/user/useUpdateInfo";
 import useUploadAvatar from "../hooks/user/useUploadAvatar";
-import { updateInfo, uploadAvatar } from "../services/Data";
-import { setAvatar } from "../store/actions";
 import BtnUI from "./BtnUI";
 import InputItem from "./InputItem";
 
@@ -50,7 +46,7 @@ const UpdateInfo = (props) => {
           <div>
             <div className="flex items-center">
               <label
-                className="w-20 h-20 bg-cover mr-5 rounded-full cursor-pointer"
+                className="w-32 h-32 bg-cover mr-5 rounded-full cursor-pointer"
                 style={{
                   backgroundImage: `url(${imgAccount})`,
                   display: "inline-block",

@@ -6,7 +6,7 @@ import { currentPageSelector, todosSelector } from "../store/selectors";
 import TableItem from "./TableItem";
 
 let Table = (props) => {
-  let selector = useSelector(todosSelector);
+  let todos = useSelector(todosSelector);
   let curPage = useSelector(currentPageSelector);
 
   const getTaskByPagination = useGetTaskByPaginition();
@@ -17,8 +17,8 @@ let Table = (props) => {
 
   return (
     <div className="h-3/4">
-      {selector.length !== 0 ? (
-        selector.map((item, index) => <TableItem item={item} id={index + 1} />)
+      {todos.length !== 0 ? (
+        todos.map((item, index) => <TableItem item={item} id={index + 1} />)
       ) : (
         <div className="w-full justify-center flex my-5">Empty</div>
       )}

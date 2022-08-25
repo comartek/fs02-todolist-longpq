@@ -8,12 +8,10 @@ import { currentPage, setTodos } from "../store/actions";
 import { currentPageSelector, todosSelector } from "../store/selectors";
 
 let PaginationUI = (props) => {
-  let { count, setCount, allTask, setAllTask } = props;
+  let { count, setCount, allTask } = props;
   let curPage = useSelector(currentPageSelector);
 
   let dispatchRedux = useDispatch();
-  setCount(Math.ceil(allTask.length / 10));
-
   let dispatchCurPage = (data) => {
     dispatchRedux(currentPage(data));
   };
@@ -23,8 +21,12 @@ let PaginationUI = (props) => {
   let getAllTask = useGetAllTask();
 
   useEffect(() => {
-    setAllTask(getAllTask);
+    getAllTask();
   }, [todos]);
+
+  useEffect(() => {
+    setCount(Math.ceil(allTask.length / 10));
+  }, [allTask]);
 
   return (
     <div className="flex justify-center">

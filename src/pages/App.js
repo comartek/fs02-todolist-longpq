@@ -10,17 +10,19 @@ import { toast, ToastContainer } from "react-toastify";
 import { AccountBtn, BtnUI, Table } from "../components";
 import PaginationUI from "../components/Pagination";
 import { currentPage, setTodos, updateCount } from "../store/actions";
-import { addTask, getAllTask, getTaskByPagination } from "../services/Data";
-import { currentPageSelector } from "../store/selectors";
+import { getTaskByPagination } from "../services/Data";
+import { allTaskSelector, currentPageSelector } from "../store/selectors";
 import useGetAllTask from "../hooks/task/useGetAllTask";
+import useAddTask from "../hooks/task/useAddTask";
 
 function App() {
   let [content, setContent] = useState("");
   let [date, setDate] = useState("");
   let [isOpen, setIsOpen] = useState(false);
   let [count, setCount] = useState(1);
-  let [allTask, setAllTask] = useState([]);
+  // let [allTask, setAllTask] = useState([]);
 
+  let allTask = useSelector(allTaskSelector);
   let curPage = useSelector(currentPageSelector);
 
   let dispatchRedux = useDispatch();
@@ -42,9 +44,10 @@ function App() {
   };
 
   const getAllTask = useGetAllTask();
+  const addTask = useAddTask();
 
   let update = () => {
-    setAllTask(getAllTask);
+    getAllTask();
     setCount(Math.ceil(allTask.length / 10));
   };
 
@@ -65,7 +68,7 @@ function App() {
 
           <Popup
             trigger={
-              <button className="bg-gray-200 px-4 py-2 rounded-full font-bold">
+              <button className="bg-gray-200 px-4 py-2 rounded-full font-bold hover:text-red-400">
                 +
               </button>
             }
@@ -98,13 +101,7 @@ function App() {
                     setIsOpen(false);
                     setContent("");
                     setDate("");
-                    addTask(
-                      content,
-                      dispatchSetTodos,
-                      update,
-                      curPage,
-                      dispatchCurPage
-                    );
+                    addTask(content, update, curPage, dispatchCurPage);
                   } else {
                     toast.error("content or date is invalid");
                   }
@@ -126,7 +123,7 @@ function App() {
           count={count}
           setCount={setCount}
           allTask={allTask}
-          setAllTask={setAllTask}
+          // setAllTask={setAllTask}
         />
       </div>
 

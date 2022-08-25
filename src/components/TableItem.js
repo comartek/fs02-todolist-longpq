@@ -27,9 +27,9 @@ let TableItem = (props) => {
     dispatchRedux(setTodos(data));
   };
 
-  // let dispatchCurPage = (data) => {
-  //   dispatchRedux(currentPage(data));
-  // };
+  let dispatchCurPage = (data) => {
+    dispatchRedux(currentPage(data));
+  };
 
   const deleteTask = useDeleteTask();
   const updateTask = useUpdateTask();
@@ -57,7 +57,7 @@ let TableItem = (props) => {
         <Popup
           modal
           trigger={
-            <button className="text-red-400 p-2 rounded-md text-sm h-fit">
+            <button className="text-red-400 p-2 rounded-md text-sm h-fit hover:bg-white">
               <FontAwesomeIcon icon={faTrash} />
             </button>
           }
@@ -80,7 +80,7 @@ let TableItem = (props) => {
               <BtnUI
                 text="Apply"
                 action={() => {
-                  deleteTask(item._id, dispatchTodos, curPage);
+                  deleteTask(item._id, curPage, dispatchCurPage);
                   setIsOpenDelete(false);
                 }}
               />
