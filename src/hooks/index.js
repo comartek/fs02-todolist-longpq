@@ -9,6 +9,7 @@ import useAddTask from "./task/useAddTask";
 import useDeleteTask from "./task/useDeleteTask";
 import useGetTaskByPaginition from "./task/useGetTaskByPagination";
 import useUpdateTask from "./task/useUpdateTask";
+import useToast from "./useToast";
 
 export {
   useLogin,
@@ -22,4 +23,5 @@ export {
   useAddTask,
   useDeleteTask,
   useGetTaskByPaginition,
+  useToast,
 };

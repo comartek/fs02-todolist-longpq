@@ -3,9 +3,11 @@ import { toast } from "react-toastify";
 import instance from "../../services/services";
 import { setUser } from "../../store/actions";
 import { userSelector } from "../../store/selectors";
+import useToast from "../useToast";
 
 let useUpdateInfo = () => {
   let dispatchRedux = useDispatch();
+  const toast = useToast();
   let dispatchUser = (data) => {
     dispatchRedux(setUser(data));
   };
@@ -24,14 +26,19 @@ let useUpdateInfo = () => {
       },
     };
 
-    instance
-      .request(options)
-      .then((res) => {
-        console.log(res.data);
-        dispatchUser(res.data.data);
-      })
-      .then(() => toast.success("Update information successful!!!"))
-      .catch((err) => toast.error(err.response.data));
+    toast(
+      instance
+        .request(options)
+        .then((res) => {
+          console.log(res.data);
+          dispatchUser(res.data.data);
+        })
+        // .then(() => toast.success(""))
+        .catch((err) => toast.error(err.response.data)),
+      "Updating information...",
+      "Update information successful!!!",
+      "Update information failed"
+    );
   };
   return updateInfo;
 };

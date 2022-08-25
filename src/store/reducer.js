@@ -15,8 +15,8 @@ const initialState = {
   currentPage: 1,
   allTask: [],
   user: {},
-  avatar: {},
-  // "https://www.meme-arsenal.com/memes/8b6f5f94a53dbc3c8240347693830120.jpg",
+  avatar:
+    "https://www.meme-arsenal.com/memes/8b6f5f94a53dbc3c8240347693830120.jpg",
 };
 
 const rootReducer = (state = initialState, action) => {

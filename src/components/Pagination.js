@@ -1,10 +1,9 @@
 import { Pagination } from "@mui/material";
-import { useEffect, useState } from "react";
+import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import useGetAllTask from "../hooks/task/useGetAllTask";
 import useGetTaskByPaginition from "../hooks/task/useGetTaskByPagination";
-import { getAllTask, getTaskByPagination } from "../services/Data";
-import { currentPage, setTodos } from "../store/actions";
+import { currentPage } from "../store/actions";
 import { currentPageSelector, todosSelector } from "../store/selectors";
 
 let PaginationUI = (props) => {

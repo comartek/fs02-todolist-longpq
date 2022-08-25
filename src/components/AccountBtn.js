@@ -15,8 +15,6 @@ let AccountBtn = (props) => {
   let [isOpen, setIsOpen] = useState(false);
   let [isOpenLogout, setIsOpenLogout] = useState(false);
 
-  const navigate = useNavigate();
-
   let user = useSelector(userSelector);
 
   let dispatchRedux = useDispatch();

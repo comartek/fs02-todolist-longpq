@@ -12,14 +12,12 @@ const store = createStore(rootReducer);
 const root = ReactDOM.createRoot(document.getElementById("root"));
 root.render(
   <Provider store={store}>
-    <React.StrictMode>
-      <BrowserRouter>
-        <Routes>
-          <Route path="/App" element={<App />} />
-          <Route path="/" element={<Login />} />
-          <Route path="/Register" element={<Register />} />
-        </Routes>
-      </BrowserRouter>
-    </React.StrictMode>
+    <BrowserRouter>
+      <Routes>
+        <Route path="/App" element={<App />} />
+        <Route path="/" element={<Login />} />
+        <Route path="/Register" element={<Register />} />
+      </Routes>
+    </BrowserRouter>
   </Provider>
 );

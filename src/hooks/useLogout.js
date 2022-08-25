@@ -1,8 +1,9 @@
 import { useNavigate } from "react-router-dom";
-import { toast } from "react-toastify";
 import instance from "../services/services";
+import useToast from "./useToast";
 
 let useLogout = () => {
+  const toast = useToast();
   const navigate = useNavigate();
   let logout = () => {
     const options = {
@@ -11,13 +12,18 @@ let useLogout = () => {
       headers: { Authorization: `${localStorage.getItem("token")}` },
     };
 
-    instance
-      .request(options)
-      .then((res) => {
-        console.log(res.data);
-      })
-      .then(() => navigate("/"))
-      .catch((err) => toast.error(err.response.data));
+    toast(
+      instance
+        .request(options)
+        .then((res) => {
+          console.log(res.data);
+        })
+        .then(() => navigate("/"))
+        .catch((err) => toast.error(err.response.data)),
+      "Logging out...",
+      "Logout successful!!!",
+      "Logout failed"
+    );
   };
 
   return logout;

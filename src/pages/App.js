@@ -14,6 +14,7 @@ import { getTaskByPagination } from "../services/Data";
 import { allTaskSelector, currentPageSelector } from "../store/selectors";
 import useGetAllTask from "../hooks/task/useGetAllTask";
 import useAddTask from "../hooks/task/useAddTask";
+import ComboBox from "../components/ComboBox";
 
 function App() {
   let [content, setContent] = useState("");
@@ -62,7 +63,10 @@ function App() {
   return (
     <div className="w-screen h-screen flex bg-red-400 items-center justify-center relative">
       <div className="bg-white rounded-md w-2/3 p-5" style={{ height: 850 }}>
-        <AccountBtn />
+        <div className="flex bg-sky- items-center justify-between">
+          <AccountBtn />
+          <ComboBox />
+        </div>
         <div className="flex flex-row items-center justify-between w-full mb-5">
           <div className="text-2xl text-red-400 font-bold">Todolist</div>
 
@@ -129,7 +133,7 @@ function App() {
 
       <ToastContainer
         position="bottom-center"
-        autoClose={2000}
+        autoClose={1000}
         hideProgressBar={false}
         newestOnTop={false}
         closeOnClick
